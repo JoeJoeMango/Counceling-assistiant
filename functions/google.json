@@ -1,10 +1,7 @@
 {
   "type": "service_account",
   "project_id": "marriage-counseling-assistant",
-  "private_key_id": "3b5a0cdac519153bf3c66bdc5e13cc900b0fe13e",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDYQMy6Xp7d9Pey\num7CZcDtudQtORvkbJmh3BG+duHQUifUP/3mt3WYd6EvqzA/dDb0mjh5pc/eBfF2\n9LBYyfdZT9hT8SSbGn6NllB9GhWyt325QyLrJQR//GFqgvVDs90kcFmY5+SwOpgg\n07KbrNYDkrazV2M2TicN7xc/13Flo20CNSnpNVbMEIxxgq9ryoHwpw7jTA3iqA4x\nq3/LZzTlTxKKUOZy+kCZtQj6LbnEQYQgajjoD9T9hLP0S/qr9aqLBuaj6FxsAE93\nTD8bzuNqYh7+ex02tSANjL/w/Ly9hP+88LJYQLsOFujK30nI8S8zrXeoxKE1Yu5T\n9BzEjQaFAgMBAAECggEAIiBdvoZ6lyfWpAWgP3zLzKgv9+AEixBpUT33reE4YwXo\nA6qCkLOAcwpj7TAcedMG7iRdR7M3QcAZ2i4kmypqJpW/W4XZQ0HT2VewhYGFjZG/\n3SnfW5DYrDLhk6utdVzvx9WUChmEQRxKEBogXElS77bqLpSak0ITjzMdLeW7nzB4\nGHMsz3SPGWCEsCB5sVCWfYjFVOjiPFu270N6c4NhFoqhov5xtWCzcRBqsu4E0eeG\nWXa9hKaH9y/cMVQva6v7D8D/a/DIjTC+qBjhf9lgAb0xh7eteoqEvUdrfSNq+EBh\nrcsFYXc5dOEuQHNFx2YHw4DnKVvYyeIjDeaHGhY3gQKBgQDvQepa5Zy5baH2zLGP\nSiPBpo1PNKj6xOd7Bgajv5o4JCq0ZamA+k/EJY4GPFfgs+bU8Q4aqOmpnlQ+LROi\nz4xLz6sj078GubdJE87RtKd255AZYVYzi56snCaZNW0z4NHE/IGdrqs/K9SFtWfr\nmgYodKHXrRE7XWszU1wpI841BQKBgQDnYsgdCbadIqN60Hh9dgVJeqDUCwi0yiBD\nGHmeAm+cZlsJQaTGFHM+BtXCW2Z6jaNroOxyOS60znnmBX0mYJ5yXHq3XDuQvrXE\nl+QJr8gsHrCyrOzXvemMbgXDaRSSfjKNuZ2hW523VmovtMM2CtVKErl0LTTLug5E\n/G7cpfRDgQKBgDMrJbPK53nAuKLPpCnA8WS4+f+2g20eL2NgJotertzS3081bsrm\nvah1X6p1vVWRJAzmgN2ywkZEVj/14/0t5hNQlolS/8ewcEJwugqfWDFV1LuY1Zaw\nhX7k5lxd0L0Hl9VJK29Nq9IWzZzK7y60Ah0k1HgLy2Om1wZjDZK+1ZsBAoGBANLi\nMuRUP/1C3qBGdCpUcEkh3Ialb8/mEDVWjzE1oyd2Gi57h4OIi+fSLuwuhV3YzUKA\nrj8EYs8jB/JeuktJ797m7mlDRH6Ncfi1Pn6dmOCtL/oIpOuUCNGWTOZmVPuWzNhi\nfYnciAfaWHkWVHxirzYNjryVnvK2pd61+wxarB8BAoGAQ/g+IJ69RjzH0v5Qp07j\nkYsmw3j3YWYCFB3b6Br4jG06mUYIPwnaXhLe1tceDY2hzpDuAz+8gj0JP0PflOu5\n8o4rvok9otBxoDtpgOuycMzUrj1qXETuwIVJQlZBwwAgGw49fEROsG00sKVX2ZCG\nrhQ/L2BFNmKQz2JIF14u8D8=\n-----END PRIVATE KEY-----\n",
-  "client_email": "counceling@marriage-counseling-assistant.iam.gserviceaccount.com",
-  "client_id": "115049142732040655335",
+
   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
   "token_uri": "https://oauth2.googleapis.com/token",
   "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
