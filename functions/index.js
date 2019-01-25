@@ -23,7 +23,7 @@ const dialogflow = require('./middlewares/dialogflow');
 
 		phrases[subject][key] = value;
 	}
-	console.log(phrases);
+	// console.log(phrases);
 
 	dialogflow.phrases = phrases;
 
