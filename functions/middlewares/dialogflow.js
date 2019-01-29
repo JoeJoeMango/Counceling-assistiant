@@ -14,11 +14,21 @@ var personTwo = [];
 var collectiveData = [];
 //get birthdates//
 var secfourPhrases = ['section-four-1','section-four-2','section-four-3','section-four-4'];
+var secOnePhrases = ['section-one-1','section-one-2','section-one-3','section-one-4'];
+var secTwoPhrases = ['section-two-1','section-two-2','section-two-3','section-two-4'];
+var secThreePhrases = ['section-three-1','section-three-2','section-three-3','section-three-4'];
 var xRandom = Math.floor((Math.random() * 3) + 1);
 var dinnerPersonSwitch = 0;
 var moneyPersonSwitch = true;
 var siblingsSwitch = true;
+var siblingReaction = true;
 var familyDinnerDifference;
+
+
+var communicationSwitch = true;
+var communicationReaction = true;
+
+
 function replaceKeys(string, keys) {
   return Object.entries(keys || {})
     .reduce((acum, [key, value]) => {
@@ -45,6 +55,7 @@ app.intent('Names', async(conv, {nameOne, nameTwo, LastName}) => {
   conv.data.userNameTwo = nameTwo;
   personOne.push(`${conv.data.userNameOne}`);
   personTwo.push(`${conv.data.userNameTwo}`);
+  dinnerPersonSwitch = 0;
 
 
   conv.ask(`<speak> Hello, ${conv.data.userNameOne} and ${conv.data.userNameTwo} Nice to meet you. Let's begin. I am going to talk to you through 2 diffent subjects.`+
@@ -56,64 +67,74 @@ app.intent('Names', async(conv, {nameOne, nameTwo, LastName}) => {
 /////////////////////////////////////////////
 /////////////////DINNER-TIME/////////////////
 /////////////////////////////////////////////
-
-app.intent('dinner time', async(conv, { DOW }) => {
+console.log("========din============= " + dinnerPersonSwitch);
+app.intent('dinner time', async(conv, { DOW, DOW1 }) => {
 	conv.data.dow = DOW;
-	if (dinnerPersonSwitch === 0 && conv.data.dow >= 0 && conv.data.dow <= 7) {
+  conv.data.dow1 = DOW1;
+console.log("========din2============= " + dinnerPersonSwitch);
+	if (conv.data.dow1 >= 0 && conv.data.dow1 <= 7 && dinnerPersonSwitch === 0) {
+
 		conv.ask(`Thankyou ${conv.data.userNameOne}, ${conv.data.userNameTwo} and you?`);
-		personOne.push(`${conv.data.dow}`);
-		dinnerPersonSwitch = 1;
+		personOne.push(`${conv.data.dow1}`);
 
-	} else if (dinnerPersonSwitch === 1 && conv.data.dow >= 0 && conv.data.dow <= 7) {
-		personTwo.push(`${conv.data.dow}`);
+    console.log("===================== " + conv.data.dow1);
+    console.log("===================== " + conv.data.dow);
+    console.log("========din3============= " + dinnerPersonSwitch);
 
-		familyDinnerDifference = personOne[1] - personTwo[1];
-		if (familyDinnerDifference < 0) {
-			familyDinnerDifference = familyDinnerDifference * -1;
-		}
-		collectiveData.push(familyDinnerDifference);
+    dinnerPersonSwitch = 1;
+	} else if (dinnerPersonSwitch === 1 && conv.data.dow1 >= 0 && conv.data.dow1 <= 7) {
+		personTwo.push(`${conv.data.dow1}`);
 
-		console.log("familyDinnerDifference     " + familyDinnerDifference);
-		if (familyDinnerDifference >= 6 && familyDinnerDifference <= 7) {
-			conv.ask(`<speak> ${getPhrase('dinner-time', 'section-one')} <break time="1s"/> ${getPhrase('dinner-time', 'eating-together')} </speak>`);
-			dinnerPersonSwitch = 2;
-		} else if (familyDinnerDifference >= 4 && familyDinnerDifference <= 5) {
-			conv.ask(`<speak> ${getPhrase('dinner-time', 'section-two')} <break time="1s"/> ${getPhrase('dinner-time', 'eating-together')} </speak>`);
-			dinnerPersonSwitch = 2;
-		} else if (familyDinnerDifference >= 2 && familyDinnerDifference <= 3) {
-			conv.ask(`<speak>${getPhrase('dinner-time', 'section-three')} <break time="1s"/> ${getPhrase('dinner-time', 'eating-together')}</speak>`);
-			dinnerPersonSwitch = 2;
-		} else if (familyDinnerDifference >= 1 && familyDinnerDifference <= 0 || familyDinnerDifference === 0) {
-			conv.ask(`<speak> ${getPhrase('dinner-time', secfourPhrases[xRandom])} <break time="1s"/> ${getPhrase('dinner-time', 'eating-together')} </speak>`);
+    		familyDinnerDifference = personOne[1] - personTwo[1];
 
-			dinnerPersonSwitch = 2;
-		} else {
-			conv.ask(`not a group`);
-		}
+    		if (familyDinnerDifference < 0) {
+    			familyDinnerDifference = familyDinnerDifference * -1;
+    		}
+    		collectiveData.push(familyDinnerDifference);
 
-	} else if (dinnerPersonSwitch === 2 && conv.data.dow >= 0 && conv.data.dow <= 1) {
+    		if (familyDinnerDifference >= 6 && familyDinnerDifference <= 7) {
+    			conv.ask(`<speak> ${getPhrase('dinner-time', secOnePhrases[xRandom])} <break time="1s"/> ${getPhrase('dinner-time', 'eating-together')} </speak>`);
+    			dinnerPersonSwitch = 2;
+    		} else if (familyDinnerDifference >= 4 && familyDinnerDifference <= 5) {
+    			conv.ask(`<speak> ${getPhrase('dinner-time', secTwoPhrases[xRandom])} <break time="1s"/> ${getPhrase('dinner-time', 'eating-together')} </speak>`);
+    			dinnerPersonSwitch = 2;
+    		} else if (familyDinnerDifference >= 2 && familyDinnerDifference <= 3) {
+    			conv.ask(`<speak>${getPhrase('dinner-time', secThreePhrases[xRandom])} <break time="1s"/> ${getPhrase('dinner-time', 'eating-together')}</speak>`);
+    			dinnerPersonSwitch = 2;
+    		} else if (familyDinnerDifference >= 1 && familyDinnerDifference <= 0 || familyDinnerDifference === 0) {
+    			conv.ask(`<speak> ${getPhrase('dinner-time', secfourPhrases[xRandom])} <break time="1s"/> ${getPhrase('dinner-time', 'eating-together')} </speak>`);
+    			dinnerPersonSwitch = 2;
+    		}
+
+	} else if (dinnerPersonSwitch === 2 && conv.data.dow1 >= 0 && conv.data.dow1 <= 1) {
     conv.contexts.set('dinner-time-thoughts', 1);
 		conv.ask(`<speak> ${getPhrase('dinner-time','thoughts-0-1')}</speak>`);
-		collectiveData.push(conv.data.dow);
-    console.log("HHHHHHHHHHKHKHKHJKHJKHKHKHN    "  +  conv.query)
-	} else if (dinnerPersonSwitch === 2 && conv.data.dow >= 2 && conv.data.dow <= 3) {
+		collectiveData.push(conv.data.dow1);
+    dinnerPersonSwitch = 3;
+
+	} else if (dinnerPersonSwitch === 2 && conv.data.dow1 >= 2 && conv.data.dow1 <= 3) {
     conv.contexts.set('dinner-time-thoughts', 1);
 		conv.ask(`<speak> ${getPhrase('dinner-time','thoughts-2-3')}</speak>`);
-		collectiveData.push(conv.data.dow);
-	} else if (dinnerPersonSwitch === 2 && conv.data.dow >= 4 && conv.data.dow <= 5) {
+		collectiveData.push(conv.data.dow1);
+    dinnerPersonSwitch = 3;
+
+	} else if (dinnerPersonSwitch === 2 && conv.data.dow1 >= 4 && conv.data.dow1 <= 5) {
     conv.contexts.set('dinner-time-thoughts', 1);
 		conv.ask(`<speak> ${getPhrase('dinner-time','thoughts-4-5')}</speak>`);
-		collectiveData.push(conv.data.dow);
-	} else if (dinnerPersonSwitch === 2 && conv.data.dow >= 6 && conv.data.dow <= 7) {
+		collectiveData.push(conv.data.dow1);
+    dinnerPersonSwitch = 3;
+
+	} else if (dinnerPersonSwitch === 2 && conv.data.dow1 >= 6 && conv.data.dow1 <= 7) {
     conv.contexts.set('dinner-time-thoughts', 1);
-		conv.ask(`<speak> ${getPhrase('dinner-time','thoughts-6-7')}</speak>`);
-		collectiveData.push(conv.data.dow);
+		conv.ask(`<speak> ${getPhrase('dinner-time','thoughts-6-7')} </speak>`);
+		collectiveData.push(conv.data.dow1);
+    dinnerPersonSwitch = 3;
+
 	} else {
 		conv.ask(getPhrase('dinner-time', 'wrong-days', {
-			dow: conv.data.dow
-		}));
+			dow1: conv.data.dow1
+    }));
 	}
-  console.log("HHHHHHHHHHKHKHKHJKHJKHKHKHN    "  +  conv.query)
 });
 
 
@@ -122,136 +143,263 @@ var boysNum = {boysNumber};
 var girlsNum_ = {girlsNumber};
 conv.data.boysNum = boysNumber;
 conv.data.girlsNum = girlsNumber;
-    if (siblingsSwitch){
-        if(conv.data.boysNum >= 1 || conv.data.girlsNum >= 1){
-          personTwo.push(`${conv.data.boysNum}`);
-          personTwo.push(`${conv.data.girlsNum}`);
-          conv.contexts.set('siblings-feelings', 1);
-          conv.ask(`Hmmmmm Interesting, and how is your relationship with them?`);
-          conv.ask(getPhrase('siblings', 'something'));
-          siblingsSwitch = false;
-          //////SENTIMENT ANALISYS HERE//////
-    }else{
-        conv.ask(`${conv.data.userNameOne} how about you? any siblings?`);
-        personTwo.push("no siblings");
-        siblingsSwitch = false;
 
-      //////SENTIMENT ANALISYS HERE//////
-        }
-    }else if (siblingsSwitch != true){
+    if (siblingsSwitch){
         if(conv.data.boysNum >= 1 || conv.data.girlsNum >= 1){
           personOne.push(`${conv.data.boysNum}`);
           personOne.push(`${conv.data.girlsNum}`);
-          conv.ask(`and do you get along?`); // get-along-question
+          conv.contexts.set('siblings-feelings', 1);
+          conv.ask(getPhrase('siblings', 'yes'));
+          siblingsSwitch = false;
+    }else{
+        conv.contexts.set('siblings-feelings', 2);
+        conv.ask(`Okay. And what was your experience growing up?`);
+        personTwo.push("no siblings");
+        siblingsSwitch = false;
+
+        }
+    }else if (siblingsSwitch === false){
+        if(conv.data.boysNum >= 1 || conv.data.girlsNum >= 1){
+          conv.contexts.set('siblings-feelings', 2);
+          personOne.push(`${conv.data.boysNum}`);
+          personOne.push(`${conv.data.girlsNum}`);
+          conv.ask(`and do you get along?`);
           siblingsSwitch = 0;
-      //////SENTIMENT ANALISYS HERE//////
   }else{
-      conv.ask(`${conv.data.userNameOne} how about you? any siblings?`);
+      conv.contexts.set('siblings-feelings', 2);
+      conv.ask(`Okay. And what was your experience growing up?`);
       personTwo.push("no siblings");
       siblingsSwitch = 0;
-      //////SENTIMENT ANALISYS HERE//////
       }
   }
 });
 
+/////////////////////////////////  COMMUNICATION  //////////////////////
 
+app.intent('communication', async(conv, {scaleValue})=>{
+// conv.contexts.set('communication-feelings', 1);
+var val = {scaleValue};
+conv.data.Value = scaleValue;
+  if(communicationSwitch ){
+    if(conv.data.Value >= 1 && conv.data.Value <= 3){
+      conv.ask(`${getPhrase('communication','q1-not-very-challenging')}. Now ${getPhrase('communication','confession')}`);
+      conv.contexts.set('communication-feelings ', 2);
+      personOne.push(conv.data.Value);
+      communicationSwitch = false;
+    }else if(conv.data.Value >= 4 && conv.data.Value <= 7){
 
-app.intent('Child-money',async(conv, {sensitive, sibling}) => {
-    var sen = {sensitive};
-    var sib = {sibling};
-    conv.data.sibling_ = sibling;
-    // conv.data.sensistiveNotification = sensitive;
-// NEED FOLLOW UP INTENT FOR HOW DID THAT MAKE YOU FEEL???????????
-    if (moneyPersonSwitch){
+      conv.ask(`${getPhrase('communication','q1-moderately-challenging')}. Now ${getPhrase('communication','confession')}`);
+      conv.contexts.set('communication-feelings ', 2);
+      personOne.push(conv.data.Value);
+      communicationSwitch = false;
+    }else if(conv.data.Value >= 8 && conv.data.Value <= 10){
 
-      conv.contexts.set('child-money-sensitive', 2);
-      if(conv.data.sibling_ == "sister"){
-        conv.ask(`sister thankyou for sharing, ${conv.data.userNameTwo}. How does that make you feel? `);
-      }else if (conv.data.sibling_ == "brother"){
-        conv.ask(`brother thankyou for sharing, ${conv.data.userNameTwo}. How does that make you feel?`);
-      }else{
-        conv.ask(`thankyou for sharing, ${conv.data.userNameTwo}. Did you enjoy being an only child? or did you wish you had siblings?`);
-      }
-      moneyPersonSwitch = false;
-    }else if(moneyPersonSwitch != true){
-      //conv.contexts.set('child-money-sensitive-no-person-switch', 2);
-      if(conv.data.sibling_ == "sister"){
-        conv.ask(`was your sister older then you?`);
-      }else if (conv.data.sibling_ == "brother"){
-        conv.ask(`Thankyou ${conv.data.userNameOne}. Did you enjoy being an only child? or did you wish you had siblings?`);
-      }else{
-        conv.ask(`thankyou for sharing, ${conv.data.userNameOne}. Now lets move onto Communication. Communication`+
-          ` at it's core a way to reduce conflict and create a more effective way for not just you and your partner`+
-          ` but everyone and everthing to share what you are feeling in order to come to some understanding of the matter at hand.`+
-          ` So as you can imagin when Communication ceases to exist or is not effective turmoil and misunderstanding can occur.`+
-          ` From what I can see so far...  ${conv.data.userNameTwo} what would you say your most common fights or arguments are about? `);
-      }
-      moneyPersonSwitch = 0;
+      conv.ask(`${getPhrase('communication','q1-highly-challenging')}. Now ${getPhrase('communication','confession')}`);
+      conv.contexts.set('communication-feelings', 2);
+      personOne.push(conv.data.Value);
+      communicationSwitch = false;
+    }else{
+      conv.ask(`I do beleave I said 1 through 10`);
     }
-  });
+  } else if (communicationSwitch === false){
+    if(conv.data.Value >= 1 && conv.data.Value <= 3){
 
+      conv.ask(`${getPhrase('communication','q1-not-very-challenging')}. Now ${getPhrase('communication','confession')}`);
+      conv.contexts.set('communication-feelings', 2);
+      personTwo.push(conv.data.Value);
+      communicationSwitch = 0;
+    }else if(conv.data.Value >= 4 && conv.data.Value <= 7){
 
-  // take a statment from both parties!!!!!!! send to get a sentiment score and return statement /////
-////    is there a way I can just log everything someone says and not throw an err   /////
+      conv.ask(`${getPhrase('communication','q1-moderately-challenging')}. Now ${getPhrase('communication','confession')}`);
+        conv.contexts.set('communication-feelings', 2);
+      personTwo.push(conv.data.Value);
+      communicationSwitch = 0;
+    }else if(conv.data.Value >= 8 && conv.data.Value <= 10){
 
-
-app.intent('communinication', async(conv)=>{
-
-});
-
-app.intent('you she he', async(conv,{blame})=>{
-  var blame_ = {blame};
-  conv.data.blame__ = blame;
-
-  if (conv.data.blame__ == "he" || conv.data.blame__ == "his"){
-    conv.ask(`this is if it contains he or him`);
-  }else if (conv.data.blame__ == "her" || conv.data.blame__ == "she"){
-    conv.ask(`this is if it contains her or she`);
+      conv.ask(`${getPhrase('communication','q1-highly-challenging')}. Now ${getPhrase('communication','confession')}`);
+      conv.contexts.set('communication-feelings', 2);
+      personTwo.push(conv.data.Value);
+      communicationSwitch = 0;
+    }else{
+      conv.ask(`I do beleave I said 1 through 10`);
+    }
   }
-});
-
-app.intent('sex life', async(conv,{sexLife})=>{
-  conv.ask(`I want to hear more about that`);
-});
-//
-app.intent('somthing positive', async(conv)=>{
-  // Grab a sentiment score here from a testimonial.
 
 });
 
-app.intent('somthing nigitive', async(conv)=>{
-  // Grab a sentiment score here from a testimonial.
+// SENTIMENT ///////////////////////////////////////////////////////////////// SENTIMENT ///////////////////////////////////////////////////////////////// SENTIMENT //
 
+/////////////////////////////////SIBLINGS //////////////////////
+
+
+app.intent('siblings - fallback', async conv =>{
+
+  const score = await sentiment(conv.query);
+//////FIEST PERSON/////////////////////////////////////
+if(siblingReaction){
+  if(score >= -1 && score <= -0.5){
+      if(conv.data.boysNum >= 1 || conv.data.girlsNum >= 1){
+      conv.ask(`<speak>${getPhrase('siblings','reaction-negitive-siblings')}. <break time="1s"/>
+          ${conv.data.userNameTwo} ${getPhrase('siblings','person-switch')} </speak>`);
+          personOne.push(score);
+          siblingReaction = false;
+      }else{
+        conv.ask(`<speak> ${getPhrase('siblings','reaction-negitive-no-siblings')}  <break time="1s"/>
+           ${conv.data.userNameTwo} ${getPhrase('siblings','person-switch')} </speak>`);
+           siblingReaction = false;
+           personOne.push(score);
+      }
+  }else if(score >= -0.5 && score <= 0){
+      if(conv.data.boysNum >= 1 || conv.data.girlsNum >= 1){
+      conv.ask(`<speak> ${getPhrase('siblings','reaction-negitive-siblings-2')} <break time="1s"/>
+          ${conv.data.userNameTwo} ${getPhrase('siblings','person-switch')}  </speak>`);
+            siblingReaction = false;
+            personOne.push(score);
+        }else{
+      conv.ask(`<speak> ${getPhrase('siblings','reaction-negitive-no-siblings-2')} <break time="1s"/>
+          ${conv.data.userNameTwo} ${getPhrase('siblings','person-switch')} </speak>`);
+          siblingReaction = false;
+          personOne.push(score);
+        }
+  }else if(score >= 0 && score <= 0.5){
+        if(conv.data.boysNum >= 1 || conv.data.girlsNum >= 1){
+          conv.ask(`Thankyou for sharing ${conv.data.userNameOne}. ${conv.data.userNameTwo}, ${getPhrase('siblings','person-switch')}`);
+            siblingReaction = false;
+            personOne.push(score)
+        }else{
+          conv.ask(`Thankyou for sharing ${conv.data.userNameOne}. ${conv.data.userNameTwo}, ${getPhrase('siblings','person-switch')} `);
+            siblingReaction = false;
+            personOne.push(score);
+        }
+  }else if(score >= 0.5 && score <= 1.0){
+        if(conv.data.boysNum >= 1 || conv.data.girlsNum >= 1){
+          conv.ask(`${getPhrase('siblings','reaction-positive')} ${conv.data.userNameTwo}, ${getPhrase('siblings','person-switch')}`);
+              siblingReaction = false;
+              personOne.push(score);
+        }else{
+          conv.ask(`I can see you are happy. ${conv.data.userNameTwo}, ${getPhrase('siblings','person-switch')} `);
+              siblingReaction = false;
+              personOne.push(score);
+        }
+      }
+///////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////PERSON TWO////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+    }else if(siblingReaction != true){
+      if(score >= -1.0 && score <= -0.5){
+        conv.contexts.set('communication-feelings', 1);
+          if(conv.data.boysNum >= 1 || conv.data.girlsNum >= 1){
+          conv.ask(`<speak>${getPhrase('siblings','reaction-negitive-siblings')}. <break time="1s"/>
+          ${getPhrase('communication','intro')}. ${conv.data.userNameOne} ${getPhrase('communication','q1')}</speak>`);
+          siblingReaction = false;
+          personTwo.push(score);
+          }else{
+            conv.ask(`<speak> ${getPhrase('siblings','reaction-negitive-no-siblings')}.<break time="1s"/>
+            ${getPhrase('communication','intro')}. ${conv.data.userNameOne} ${getPhrase('communication','q1')}</speak>`);
+              siblingReaction = false;
+              personTwo.push(score);
+          }
+      }else if(score >= -0.5 && score <= 0.0){
+          if(conv.data.boysNum >= 1 || conv.data.girlsNum >= 1){
+          conv.ask(`<speak> ${getPhrase('siblings','reaction-negitive-siblings-2')}. <break time="1s"/>
+          ${getPhrase('communication','intro')}. ${conv.data.userNameOne} ${getPhrase('communication','q1')}</speak>`);
+          siblingReaction = false;
+            personTwo.push(score);
+            }else{
+          conv.ask(`<speak> ${getPhrase('siblings','reaction-negitive-no-siblings-2')}. <break time="1s"/>
+          ${conv.data.userNameOne} ${getPhrase('communication','q1')}</speak>`);
+          siblingReaction = false;
+            personTwo.push(score);
+            }
+      }else if(score >= 0.0 && score <= 0.5){
+            if(conv.data.boysNum >= 1 || conv.data.girlsNum >= 1){
+              conv.ask(`<speak> Thankyou for sharing ${conv.data.userNameOne}. ${conv.data.userNameOne} ${getPhrase('communication','q1')}</speak>`);
+                personTwo.push(score);
+            }else{
+              conv.ask(`<speak> Thankyou for sharing ${conv.data.userNameOne}. ${conv.data.userNameOne} ${getPhrase('communication','q1')} </speak>`);
+                personTwo.push(score);
+            }
+      }else if(score >= 0.5 && score <= 1){
+            if(conv.data.boysNum >= 1 || conv.data.girlsNum >= 1){
+              conv.ask(`<speak> ${getPhrase('siblings','reaction-positive')}. ${conv.data.userNameOne} ${getPhrase('communication','q1')} </speak>`);
+               personTwo.push(score);
+            }else{
+              conv.ask(`I can see you are happy. ${conv.data.userNameOne} ${getPhrase('communication','q1')}</speak>`);
+                personTwo.push(score);
+            }
+          }
+    }
 });
 
-app.intent('final assessment', async(conv)=>{
-  // collective content delivery for both people //
-});
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////DINER TIME SENTIMENT/////////////
+/////////////////////////////////////////////////////////////////
 
 app.intent('dinner time - fallback', async conv => {
   const score = await sentiment(conv.query);
-  if(score <= 1 && score >= 0.49999999){
-    conv.ask('happy');
-  }else if(score <= 0.5 && score >= 0.1){
-    conv.ask('happy');
-  }else if(score <= 0 && score >= -.5){
-    conv.ask('happy');
-  }else if(score <= -.5 && score >= -1){
-    conv.ask('happy');
-  }else if(score <= ___ && score >= ___){
+  if(score >= -1 && score <= -0.5){
 
+      conv.ask(`<speak> ${getPhrase('dinner-time','very-negitive')} <break time="1s"/>
+        ${conv.data.userNameOne}, ${getPhrase('dinner-time','sibling-followup')} </speak>`);
+        collectiveData.push(score);
+
+  }else if(score >= -0.5 && score <= 0){
+
+      conv.ask(`<speak> ${getPhrase('dinner-time','annoyed')} <break time="3s"/>
+        ${conv.data.userNameOne}, ${getPhrase('dinner-time','sibling-followup')} </speak>`);
+        collectiveData.push(score);
+
+  }else if(score >= 0 && score <= 0.5){
+
+      conv.ask(`<speak> ${getPhrase('dinner-time','positive')} <break time="1s"/>
+        ${conv.data.userNameOne}, ${getPhrase('dinner-time','sibling-followup')} </speak>`);
+        collectiveData.push(score);
+
+  } else if(score >= 0.5 && score <= 1){
+
+    conv.ask(`<speak> ${getPhrase('dinner-time','very-positive')} <break time="1s"/>
+      ${conv.data.userNameOne}, ${getPhrase('dinner-time','sibling-followup')} </speak>`);
+      collectiveData.push(score);
   }
+});
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////COMMUNICATION SENTIMENT/////////
+/////////////////////////////////////////////////////////////////
 
+app.intent('communication - fallback', async conv =>{
+  const score = await sentiment(conv.query);
+if(communicationReaction){
+  if(score >= -1.0 && score <= -0.5){
+    conv.ask(`${getPhrase('comminication','frustrated')} ${getPhrase('comminication','person-switch')} `);
+  } else if(score >= -0.5 && score <= 0){
+    conv.ask(`${getPhrase('comminication','less-frustrated')} ${getPhrase('comminication','person-switch')}`);
+  } else if(score >= 0 && score <= 0.5){
+    conv.ask(`${getPhrase('comminication','nutral')} ${getPhrase('comminication','person-switch')}`);
+  } else if(score >= 0.5 && score <= 1){
+    conv.ask(`${getPhrase('comminication','good')} ${getPhrase('comminication','person-switch')}`);
+  }
+}else if(communicationReaction === true){
+  if(score >= -1.0 && score <= -0.5){
+    conv.close(`${getPhrase('comminication','frustrated')} ${conv.data.userNameTwo} and ${conv.data.userNameOne},
+    ${getPhrase('comminication','conclustion')}
+    ${getPhrase('comminication','wisdom-1')}`);
+  } else if(score >= -0.5 && score <= 0){
+    conv.close(`${getPhrase('comminication','less-frustrated')} ${conv.data.userNameTwo} and ${conv.data.userNameOne}
+    ${getPhrase('comminication','conclustion')} ${getPhrase('comminication','wisdom-2')}`);
 
-})
+  } else if(score >= 0 && score <= 0.5){
+    conv.close(`${getPhrase('comminication','nutral')} ${conv.data.userNameTwo} and ${conv.data.userNameOne}
+    ${getPhrase('comminication','conclustion')}   ${getPhrase('comminication','wisdom-2')}`);
 
-// app.intent('Default Fallback Intent', async conv => {
-//   let message = 'Oops';
-//   console.log(conv.query);
-//   const score = await sentiment(conv.query);
-//   conv.ask(message);
-// });
+  } else if(score >= 0.5 && score <= 1){
+    conv.close(`${getPhrase('comminication','good')} ${conv.data.userNameTwo} and ${conv.data.userNameOne}
+    ${getPhrase('comminication','conclustion')}
+    ${getPhrase('comminication','wisdom-2')}`);
+  }
+}
 
+});
 
 async function sentiment(text) {
   try {
